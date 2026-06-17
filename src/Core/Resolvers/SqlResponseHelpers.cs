@@ -142,6 +142,11 @@ namespace Azure.DataApiBuilder.Core.Resolvers
         /// <returns>Additional fields that are present in the response</returns>
         private static HashSet<string> DetermineExtraFieldsInResponse(JsonElement response, List<string> fieldsToBeReturned)
         {
+            if (response.ValueKind is not JsonValueKind.Object)
+            {
+                return new HashSet<string>();
+            }
+
             HashSet<string> fieldsPresentInResponse = new();
 
             foreach (JsonProperty property in response.EnumerateObject())
